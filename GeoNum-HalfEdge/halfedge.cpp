@@ -11,15 +11,6 @@ HalfEdge::HalfEdge(Vertex *source, Face *face) :
 
 }
 
-HalfEdge::~HalfEdge() {
-    HalfEdge* tmp = _next;
-    while (_next != nullptr) {
-        _next = _next->next();
-        delete tmp;
-        tmp = _next;
-    }
-}
-
 // ------------------------------------------------------------------------------------
 // ACCESSEURS
 

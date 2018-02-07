@@ -24,8 +24,6 @@ private: /// Donnees privees
 public: /// Constructeurs
     HalfEdge(Vertex* source, Face* face);
 
-    ~HalfEdge();
-
 public: /// Accesseurs
     const Vertex* source() const;
 

@@ -11,6 +11,9 @@ class HalfEdge;
 
 class Vertex
 {
+    /// Operateur d'affichage
+    friend std::ostream& operator<<(std::ostream& os, const Vertex& v);
+
 private: /// Macro
     static int NBR_OF_VERT;
 

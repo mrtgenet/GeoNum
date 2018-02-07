@@ -2,6 +2,18 @@
 
 
 // ------------------------------------------------------------------------------------
+// Re-definition de l'operateur << (friend)
+
+std::ostream& operator<<(std::ostream& os, const Vertex& v) {
+    os << "Vertex " << v.get_id() << ":" << std::endl;
+    for (auto it : v.coordinates()) {
+        os << it << " ";
+    }
+
+    return os;
+}
+
+// ------------------------------------------------------------------------------------
 // MACRO
 
 int Vertex::NBR_OF_VERT = 0;

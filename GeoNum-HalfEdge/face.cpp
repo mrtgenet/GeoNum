@@ -2,6 +2,21 @@
 
 
 // ------------------------------------------------------------------------------------
+// Re-definition de l'operateur << (friend)
+
+std::ostream& operator<<(std::ostream& os, const Face& f) {
+    os << "Face " << f.get_id() << ":" << std::endl;
+    const HalfEdge* tmp = f.edge_ptr();
+    do {
+        os << tmp->source()->get_id() << " ";
+        tmp = tmp->next();
+    } while (tmp != f.edge_ptr());
+
+    return os;
+}
+
+
+// ------------------------------------------------------------------------------------
 // MACRO
 
 int Face::NBR_OF_FACES = 0;
@@ -31,14 +46,14 @@ Face::Face(const std::vector<Vertex*>& v):
     prec->set_next(_i_edge);
 
     // DEBUG
-    std::cout << "Face : " << _i_edge->face()->get_id() << std::endl;
-    tmp_edge = _i_edge;
-    do {
-        std::cout << tmp_edge->source()->get_id() << " -> "
-                  << tmp_edge->next()->source()->get_id() << "\n";
-        tmp_edge = tmp_edge->next();
-    } while (tmp_edge != _i_edge);
-    std::cout << std::endl;
+//    std::cout << "Face : " << _i_edge->face()->get_id() << std::endl;
+//    tmp_edge = _i_edge;
+//    do {
+//        std::cout << tmp_edge->source()->get_id() << " -> "
+//                  << tmp_edge->next()->source()->get_id() << "\n";
+//        tmp_edge = tmp_edge->next();
+//    } while (tmp_edge != _i_edge);
+//    std::cout << std::endl;
 }
 
 Face::~Face() {

@@ -13,6 +13,9 @@ class Vertex;
 
 class Face
 {
+    /// Operateur d'affichage
+    friend std::ostream& operator<<(std::ostream& os, const Face& f);
+
 private: /// Macro
     static int NBR_OF_FACES;
 

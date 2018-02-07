@@ -15,18 +15,16 @@ Mesh::Mesh() :
 }
 
 Mesh::~Mesh() {
-    std::cout << "~Mesh" << std::endl;
+    for (auto it = _faces.begin(); it != _faces.end(); ++it) {
+        if (it->second != nullptr) {
+            delete it->second;
+        }
+    }
     for (auto it = _vertices.begin(); it != _vertices.end(); ++it) {
         if (it->second != nullptr) {
             delete it->second;
         }
     }
-//    for (auto it = _faces.begin(); it != _faces.end(); ++it) {
-//        if (it->second != nullptr) {
-//            std::cout << (*it).second->get_id() << " ";
-//            delete it->second;
-//        }
-//    }
 }
 
 
@@ -227,5 +225,15 @@ bool Mesh::import(const char* path) {
     _link_halfedges(links);
 
     std::cout << "OFF file successfully imported." << std::endl;
+    // Debug
+    std::cout << std::endl;
+    for (auto it : _faces) {
+        std::cout << *(it.second) << std::endl;
+    }
+    std::cout << std::endl;
+    for (auto it : _vertices) {
+        std::cout << *(it.second) << std::endl;
+    }
+    std::cout << std::endl;
     return true;
 }
