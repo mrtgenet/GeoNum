@@ -10,16 +10,18 @@
 Mesh::Mesh() :
     _vertices(),
     _faces()
-{
-
-}
+{}
 
 Mesh::~Mesh() {
+    // Liberation de la memoire pour les faces
     for (auto it = _faces.begin(); it != _faces.end(); ++it) {
         if (it->second != nullptr) {
+            /* Libere en chaine la memoire allouee pour chacune des demi-aretes
+             * pour chaque sommet (dans le sens direct), voir face.cpp */
             delete it->second;
         }
     }
+    // Liberation de la memoire pour les sommets
     for (auto it = _vertices.begin(); it != _vertices.end(); ++it) {
         if (it->second != nullptr) {
             delete it->second;
@@ -36,7 +38,6 @@ int Mesh::_add_vertex(float x, float y, float z) {
     auto ret = _vertices.insert(std::pair<int, Vertex*>(v->get_id(), v));
     if (ret.second == false) {
         std::cerr << "Vertex duplicated!" << std::endl;
-        //        delete v;
         return -1;
     }
     return v->get_id();
@@ -65,9 +66,11 @@ int Mesh::_add_face(int n, const int* indices,
 
     HalfEdge* ie = f->edge_ptr();
     HalfEdge* scan = ie;
+    // Parcours des demi-aretes jusqu'a revenir sur la demi-arete incidente
     do {
         int source_id = scan->source()->get_id();
         int target_id = scan->next()->source()->get_id();
+        // Enregistrement de la demi-arete dans la map links (voir mesh.h)
         auto ret = links.insert(
                     std::pair<std::pair<int, int>, HalfEdge*>(
                         std::pair<int, int>(source_id, target_id), scan));
@@ -83,7 +86,7 @@ int Mesh::_add_face(int n, const int* indices,
     return f->get_id();
 }
 
-void Mesh::_link_halfedges(std::map<std::pair<int, int>, HalfEdge*>& links) {
+void Mesh::_link_halfedges(const std::map<std::pair<int, int>, HalfEdge*>& links) {
     // Pour chaque face
     for (auto it = _faces.begin(); it != _faces.end(); ++it) {
         // Parcours des demi-aretes a partir de la demi-arete incidente

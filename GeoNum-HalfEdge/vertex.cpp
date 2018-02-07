@@ -16,7 +16,7 @@ std::ostream& operator<<(std::ostream& os, const Vertex& v) {
 // ------------------------------------------------------------------------------------
 // MACRO
 
-int Vertex::NBR_OF_VERT = 0;
+unsigned long Vertex::NBR_OF_VERT = 0;
 
 
 // ------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ Vertex::Vertex(const std::initializer_list<float> &l) :
 // ------------------------------------------------------------------------------------
 // ACCESSEURS
 
-int Vertex::get_id() const {
+unsigned long Vertex::get_id() const {
     return _id;
 }
 
@@ -63,6 +63,7 @@ void Vertex::set_i_edge(HalfEdge* edge) {
 
 void Vertex::push_neighbours(std::vector<Vertex*>& out) {
     HalfEdge* tmp = _i_edge;
+    // Parcours des demi-aretes autour du sommet courant jusqu'a revenir sur _i_edge
     do {
         tmp = tmp->inverse();
         out.push_back(tmp->source());

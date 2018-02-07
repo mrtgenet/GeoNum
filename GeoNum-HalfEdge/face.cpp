@@ -19,7 +19,7 @@ std::ostream& operator<<(std::ostream& os, const Face& f) {
 // ------------------------------------------------------------------------------------
 // MACRO
 
-int Face::NBR_OF_FACES = 0;
+unsigned long Face::NBR_OF_FACES = 0;
 
 
 // ------------------------------------------------------------------------------------
@@ -31,11 +31,12 @@ Face::Face(const std::vector<Vertex*>& v):
     Face::NBR_OF_FACES += 1;
 
     auto it = v.begin();
+    // Creation de la demi-arete incidente
     _i_edge = new HalfEdge(*it, this);
     ++it;
     HalfEdge* tmp_edge = nullptr;
     HalfEdge* prec = _i_edge;
-
+    // Creation des demi-aretes entre chaque sommet (dans le sens direct)
     while (it != v.end()) {
         tmp_edge = new HalfEdge(*it, this);
         prec->set_next(tmp_edge);
@@ -58,6 +59,7 @@ Face::Face(const std::vector<Vertex*>& v):
 
 Face::~Face() {
     HalfEdge* tmp = _i_edge->next();
+    // Liberation de l'espace memoire pour toutes les demi-aretes dans le sens direct
     while (tmp != _i_edge) {
         HalfEdge* del = tmp;
         tmp = tmp->next();
@@ -70,7 +72,7 @@ Face::~Face() {
 // ------------------------------------------------------------------------------------
 // CONSTRUCTEURS
 
-int Face::get_id() const {
+unsigned long Face::get_id() const {
     return _id;
 }
 

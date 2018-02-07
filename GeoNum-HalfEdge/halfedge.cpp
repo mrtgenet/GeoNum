@@ -7,9 +7,7 @@
 HalfEdge::HalfEdge(Vertex *source, Face *face) :
     _source(source),
     _face(face)
-{
-
-}
+{}
 
 // ------------------------------------------------------------------------------------
 // ACCESSEURS
