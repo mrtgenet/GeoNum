@@ -178,7 +178,7 @@ bool Mesh::import(const char* path) {
     stream >> f;
     stream >> e;
 
-    if (v < 3 || f < 1 || e < 3) {
+    if (v < 3 || f < 1) {
         std::cerr << "Inconsistant model" << std::endl;
         return false;
     }
