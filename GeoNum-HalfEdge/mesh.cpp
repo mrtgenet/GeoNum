@@ -90,11 +90,14 @@ void Mesh::_link_halfedges(std::map<std::pair<int, int>, HalfEdge*>& links) {
         HalfEdge* ie = it->second->edge_ptr();
         HalfEdge* scan = ie;
         do {
+            // Mettre a jour la demi-arete incidente du sommet
+            scan->source()->set_i_edge(scan);
+            // Recherche de la demi-arete inverse
             int source_id = scan->source()->get_id();
             int target_id = scan->next()->source()->get_id();
-            // Recherche de la demi-arete inverse
             auto it = links.find(std::pair<int, int>(target_id, source_id));
             if (it != links.end()) {
+                // Mise a jour de la tete-beche
                 scan->set_inverse(it->second);
             }
             else {
@@ -226,14 +229,40 @@ bool Mesh::import(const char* path) {
 
     std::cout << "OFF file successfully imported." << std::endl;
     // Debug
-    std::cout << std::endl;
-    for (auto it : _faces) {
-        std::cout << *(it.second) << std::endl;
+//    std::cout << std::endl;
+//    for (auto it : _faces) {
+//        std::cout << *(it.second) << std::endl;
+//    }
+//    std::cout << std::endl;
+//    for (auto it : _vertices) {
+//        std::cout << *(it.second) << std::endl;
+//    }
+//    std::cout << std::endl;
+    return true;
+}
+
+bool Mesh::export_as(const char* path) const {
+    std::ofstream of;
+    of.open(path);
+    if ((of.rdstate() & std::ofstream::failbit ) != 0) {
+        std::cerr << "Error opening " << path << std::endl;
+        return false;
     }
-    std::cout << std::endl;
-    for (auto it : _vertices) {
-        std::cout << *(it.second) << std::endl;
+    // TODO
+    of.close();
+    return true;
+}
+
+
+// ------------------------------------------------------------------------------------
+// MISC
+
+bool Mesh::push_vertex_neighbours(int vert_index, std::vector<Vertex*>& out) {
+    auto ret = _vertices.find(vert_index);
+    if (ret == _vertices.end()) {
+        return false;
     }
-    std::cout << std::endl;
+    ret->second->push_neighbours(out);
+
     return true;
 }

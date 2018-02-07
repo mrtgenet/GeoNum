@@ -27,7 +27,11 @@ public: /// Constructeurs
 public: /// Accesseurs
     const Vertex* source() const;
 
+    Vertex* source();
+
     const Face* face() const;
+
+    Face* face();
 
     const HalfEdge* next() const;
 

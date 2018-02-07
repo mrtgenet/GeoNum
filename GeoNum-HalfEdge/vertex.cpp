@@ -57,3 +57,15 @@ void Vertex::set_i_edge(HalfEdge* edge) {
     _i_edge = edge;
 }
 
+
+// ------------------------------------------------------------------------------------
+// MISC
+
+void Vertex::push_neighbours(std::vector<Vertex*>& out) {
+    HalfEdge* tmp = _i_edge;
+    do {
+        tmp = tmp->inverse();
+        out.push_back(tmp->source());
+        tmp = tmp->next();
+    } while (tmp != _i_edge);
+}

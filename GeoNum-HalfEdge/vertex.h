@@ -39,6 +39,9 @@ public: /// Accesseurs
     HalfEdge* edge_ptr();
 
     void set_i_edge(HalfEdge* edge);
+
+public: /// Misc
+    void push_neighbours(std::vector<Vertex*>& out);
 };
 
 #endif // VERTEX_H

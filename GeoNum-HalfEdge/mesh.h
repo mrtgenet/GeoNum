@@ -38,6 +38,11 @@ private: /// Methodes privees de lecture/ecriture de fichier OFF
 
 public: /// Methodes import/export format OFF
     bool import(const char* path);
+
+    bool export_as(const char* path) const;
+
+public: /// Misc
+    bool push_vertex_neighbours(int vert_index, std::vector<Vertex*>& out);
 };
 
 #endif // MESH_H

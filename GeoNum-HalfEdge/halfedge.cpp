@@ -18,7 +18,15 @@ const Vertex* HalfEdge::source() const {
     return _source;
 }
 
+Vertex* HalfEdge::source() {
+    return _source;
+}
+
 const Face* HalfEdge::face() const {
+    return _face;
+}
+
+Face* HalfEdge::face() {
     return _face;
 }
 

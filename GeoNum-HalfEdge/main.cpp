@@ -30,6 +30,16 @@ int main()
 
     Mesh mesh;
     mesh.import(cube.c_str());
+    mesh.export_as((PATH + "out.off").c_str());
+
+    std::vector<Vertex*> v;
+    mesh.push_vertex_neighbours(4, v);
+    // Resultat attendu : (0, -1, 0), (1, 0, 1), (0, 1, 0)
+    std::cout << "Vertex 4 neighbours :" << std::endl;
+    for (auto it : v) {
+        std::cout << (*it) << std::endl;
+    }
+    std::cout << std::endl;
 
     return 0;
 }
