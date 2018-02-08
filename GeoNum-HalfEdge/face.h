@@ -74,6 +74,17 @@ public: /// Accesseurs
      * @param edge Pointeur vers une demi-arete incidente a la face
      */
     void set_i_edge(HalfEdge* edge);
+
+public: /// Misc
+    /* TODO : Calcul du centroid (barycentre) de la face (polynome simple)
+     *  - ramener au plan z = cste (matrice de transfo M)
+     *  - Aire A = 1/2 * Sum[0, n-1](x[i]*y[i+1] - x[i+1]*y[i])
+     *  - Cx = 1/(6*A) * Sum[0, n-1]((x[i]+x[i+1])*(x[i]*y[i+1] - x[i+1]*y[i])
+     *  - Cy = 1/(6*A) * Sum[0, n-1]((y[i]+y[i+1])*(x[i]*y[i+1] - x[i+1]*y[i])
+     *  - transormation inverse de M
+     * Cas d'une face triangulaire : C = 1/3 * (A + B + C)
+     * Besoin de calculer la normale, puis rotation de la normale pour avoir (0, 0, 1)
+     */
 };
 
 #endif // FACE_H
