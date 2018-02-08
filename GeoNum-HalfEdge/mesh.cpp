@@ -255,7 +255,29 @@ bool Mesh::export_as(const char* path) const {
         std::cerr << "Error opening " << path << std::endl;
         return false;
     }
-    // TODO
+    // OFF
+    of << "OFF" << std::endl;
+    of << std::endl;
+    // v f e
+    of << _vertices.size() << " " << _faces.size() << " " << 0 << std::endl;
+    // Vertices
+    for (auto it : _vertices) {
+        glm::vec3 v = it.second->coordinates();
+        of << v[0] << "  " << v[1] << "  " << v[2] << std::endl;
+    }
+    // Faces
+    for (auto it : _faces) {
+        of << it.second->size() << "  ";
+        HalfEdge* ie = it.second->edge_ptr();
+        HalfEdge* scan = ie;
+        do {
+            of << scan->source()->get_id() << " ";
+            scan = scan->next();
+        } while (scan != ie);
+        of << std::endl;
+    }
+    of << std::endl;
+
     of.close();
     return true;
 }

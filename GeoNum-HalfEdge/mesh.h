@@ -93,7 +93,6 @@ public: /// Methodes import/export format OFF
      * @brief Exporte le maillage courant au format OFF
      * @param path Chemin vers le fichier OFF a ecrire
      * @return true si succes, false sinon
-     * @warning ACTUELLEMENT NON FONCTIONNEL
      */
     bool export_as(const char* path) const;
 
