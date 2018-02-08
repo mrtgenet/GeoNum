@@ -131,3 +131,14 @@ glm::vec3 Face::normal() const {
     }
     return n;
 }
+
+glm::vec3 Face::centroid() const {
+    glm::vec3 c;
+    HalfEdge* scan = _i_edge;
+    do {
+        c += scan->source()->coordinates();
+        scan = scan->next();
+    } while (scan != _i_edge);
+    c *= 1.f / (float) _nbr_of_vert;
+    return c;
+}

@@ -238,6 +238,8 @@ bool Mesh::import(const char* path) {
         std::cout << *(it.second) << std::endl;
         glm::vec3 n = it.second->normal();
         std::cout << "n(" << n[0] << ", " << n[1] << ", " << n[2] << ")" << std::endl;
+        glm::vec3 c = it.second->centroid();
+        std::cout << "c(" << c[0] << ", " << c[1] << ", " << c[2] << ")" << std::endl;
     }
     std::cout << std::endl;
     for (auto it : _vertices) {

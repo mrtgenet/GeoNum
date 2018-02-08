@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <glm/geometric.hpp>
+#include <glm/matrix.hpp>
 
 #include "halfedge.h"
 #include "vertex.h"
@@ -89,21 +90,17 @@ public: /// Accesseurs
     void set_i_edge(HalfEdge* edge);
 
 public: /// Misc
-    /* TODO : Calcul du centroid (barycentre) de la face (polynome simple)
-     *  - ramener au plan z = cste (matrice de transfo M)
-     *  - Aire A = 1/2 * Sum[0, n-1](x[i]*y[i+1] - x[i+1]*y[i])
-     *  - Cx = 1/(6*A) * Sum[0, n-1]((x[i]+x[i+1])*(x[i]*y[i+1] - x[i+1]*y[i])
-     *  - Cy = 1/(6*A) * Sum[0, n-1]((y[i]+y[i+1])*(x[i]*y[i+1] - x[i+1]*y[i])
-     *  - transormation inverse de M
-     * Cas d'une face triangulaire : C = 1/3 * (A + B + C)
-     * Besoin de calculer la normale, puis rotation de la normale pour avoir (0, 0, 1)
-     * -> Face consideree plane ? -> approximation par un produit vectoriel de deux
-     *    aretes adjacentes
-     * -> Moyenne des n normales aux sommets de la face ?
-     * Utilisation de glm
+    /**
+     * @brief Calcule de la normale de la face
+     * @return Retourne le vecteur unitaire normal de la face
      */
-
     glm::vec3 normal() const;
+
+    /**
+     * @brief Calcule le barycentre de la face
+     * @return Retourne un vecteur des coordonnees 3D du barycentre de la face
+     */
+    glm::vec3 centroid() const;
 };
 
 #endif // FACE_H
