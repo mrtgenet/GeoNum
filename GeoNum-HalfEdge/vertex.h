@@ -2,6 +2,7 @@
 #define VERTEX_H
 
 #include <vector>
+#include <glm/vec3.hpp>
 #include <iostream>
 
 #include "halfedge.h"
@@ -10,7 +11,8 @@
 class HalfEdge;
 
 /**
- * @brief Representation d'un sommet par ses coordonnees et une demi-arete incidente
+ * @brief Representation d'un sommet par ses coordonnees, une demi-arete incidente et
+ *        un identifiant unique
  */
 class Vertex
 {
@@ -32,7 +34,7 @@ private: /// Donnees privees
     /**
      * @brief Vecteur des coordonnees 3D du sommet
      */
-    std::vector<float> _coord;
+    glm::vec3 _coord;
 
     /**
      * @brief Pointeur vers une demi-arete incidente au sommet
@@ -42,9 +44,11 @@ private: /// Donnees privees
 public: /// Constructeurs
     /**
      * @brief Constructeur par defaut, initialise les coordonnees du sommet
-     * @param l Liste {x, y, z} des coordonnees 3D du sommet
+     * @param x Coordonnee en X
+     * @param y Coordonnee en Y
+     * @param z Coordonnee en Z
      */
-    Vertex(const std::initializer_list<float>& l);
+    Vertex(float x, float y, float z);
 
 public: /// Accesseurs
     /**
@@ -57,13 +61,13 @@ public: /// Accesseurs
      * @brief Getter en lecture seule pour les coordonnees
      * @return Retourne une reference des coordonnees en lecture seule
      */
-    const std::vector<float>& coordinates() const;
+    const glm::vec3& coordinates() const;
 
     /**
      * @brief Getter en lecture/ecriture pour les coordonnees
      * @return Retourne une reference des coordonnees en lecture/ecriture
      */
-    std::vector<float>& coordinates();
+    glm::vec3& coordinates();
 
     /**
      * @brief Getter const pour la demi-arete incidente

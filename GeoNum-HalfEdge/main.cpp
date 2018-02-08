@@ -34,7 +34,7 @@ int main()
 
     std::vector<Vertex*> v;
     mesh.push_vertex_neighbours(4, v);
-    // Resultat attendu : (0, -1, 0), (1, 0, 1), (0, 1, 0)
+    // Resultat attendu : 7(0, 0, 1), 0(1, 1, 1), 5(1, 0, 0)
     std::cout << "Vertex 4 neighbours :" << std::endl;
     for (auto it : v) {
         std::cout << (*it) << std::endl;

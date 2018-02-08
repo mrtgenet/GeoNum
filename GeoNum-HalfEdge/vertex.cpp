@@ -6,9 +6,7 @@
 
 std::ostream& operator<<(std::ostream& os, const Vertex& v) {
     os << "Vertex " << v.get_id() << ":" << std::endl;
-    for (auto it : v.coordinates()) {
-        os << it << " ";
-    }
+    os << v.coordinates()[0] << " " << v.coordinates()[1] << " " << v.coordinates()[2];
 
     return os;
 }
@@ -22,9 +20,9 @@ unsigned long Vertex::NBR_OF_VERT = 0;
 // ------------------------------------------------------------------------------------
 // CONSTRUCTEURS
 
-Vertex::Vertex(const std::initializer_list<float> &l) :
+Vertex::Vertex(float x, float y, float z) :
     _id(Vertex::NBR_OF_VERT),
-    _coord(l)
+    _coord(x, y, z)
 {
     Vertex::NBR_OF_VERT += 1;
 }
@@ -37,11 +35,11 @@ unsigned long Vertex::get_id() const {
     return _id;
 }
 
-const std::vector<float>& Vertex::coordinates() const {
+const glm::vec3 &Vertex::coordinates() const {
     return _coord;
 }
 
-std::vector<float>& Vertex::coordinates() {
+glm::vec3 &Vertex::coordinates() {
     return _coord;
 }
 

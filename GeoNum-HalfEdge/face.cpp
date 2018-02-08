@@ -26,7 +26,8 @@ unsigned long Face::NBR_OF_FACES = 0;
 // CONSTRUCTEURS
 
 Face::Face(const std::vector<Vertex*>& v):
-    _id(Face::NBR_OF_FACES)
+    _id(Face::NBR_OF_FACES),
+    _nbr_of_vert(v.size())
 {
     Face::NBR_OF_FACES += 1;
 
@@ -76,6 +77,10 @@ unsigned long Face::get_id() const {
     return _id;
 }
 
+unsigned int Face::size() const {
+    return _nbr_of_vert;
+}
+
 const HalfEdge* Face::edge_ptr() const {
     return _i_edge;
 }
@@ -86,4 +91,43 @@ HalfEdge* Face::edge_ptr() {
 
 void Face::set_i_edge(HalfEdge* edge) {
     _i_edge = edge;
+}
+
+
+// ------------------------------------------------------------------------------------
+// MISC
+
+glm::vec3 Face::normal() const {
+    glm::vec3 n;
+    HalfEdge* left = _i_edge->next();
+    HalfEdge* right = left->next();
+    // Cas simple : face triangulaire
+    if (_nbr_of_vert == 3) {
+        glm::vec3 u = left->source()->coordinates()
+                - _i_edge->source()->coordinates();
+        glm::vec3 v = right->source()->coordinates()
+                - _i_edge->source()->coordinates();
+        n = glm::normalize(glm::cross(u, v));
+    }
+    // Moyenne des normales
+    else {
+        std::vector<glm::vec3> normals;
+        // Parcours des triangles composant la face pour calculer leur normale
+        do {
+            glm::vec3 u = left->source()->coordinates()
+                    - _i_edge->source()->coordinates();
+            glm::vec3 v = right->source()->coordinates()
+                    - _i_edge->source()->coordinates();
+            normals.push_back(glm::normalize(glm::cross(u, v)));
+            left = left->next();
+            right = right->next();
+        } while (right != _i_edge);
+        // Moyenne des normales
+        int k = normals.size();
+        for (auto it : normals) {
+            n += it;
+        }
+        n *= 1.f / (float) k;
+    }
+    return n;
 }

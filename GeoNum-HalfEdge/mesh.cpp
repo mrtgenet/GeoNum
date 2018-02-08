@@ -34,10 +34,11 @@ Mesh::~Mesh() {
 // METHODES PRIVEES DE CREATION DU MESH
 
 int Mesh::_add_vertex(float x, float y, float z) {
-    Vertex* v = new Vertex({x, y, z});
+    Vertex* v = new Vertex(x, y, z);
     auto ret = _vertices.insert(std::pair<int, Vertex*>(v->get_id(), v));
     if (ret.second == false) {
         std::cerr << "Vertex duplicated!" << std::endl;
+        delete v;
         return -1;
     }
     return v->get_id();
@@ -60,7 +61,7 @@ int Mesh::_add_face(int n, const int* indices,
     auto ret = _faces.insert(std::pair<int, Face*>(f->get_id(), f));
     if (ret.second == false) {
         std::cerr << "Face duplicated!" << std::endl;
-        //        delete f;
+        delete f;
         return -1;
     }
 
@@ -76,7 +77,6 @@ int Mesh::_add_face(int n, const int* indices,
                         std::pair<int, int>(source_id, target_id), scan));
         if (ret.second == false) {
             std::cerr << "Edge duplicated!" << std::endl;
-            //            delete f;
             return -1;
         }
 
@@ -231,16 +231,20 @@ bool Mesh::import(const char* path) {
     _link_halfedges(links);
 
     std::cout << "OFF file successfully imported." << std::endl;
+
     // Debug
-//    std::cout << std::endl;
-//    for (auto it : _faces) {
-//        std::cout << *(it.second) << std::endl;
-//    }
-//    std::cout << std::endl;
-//    for (auto it : _vertices) {
-//        std::cout << *(it.second) << std::endl;
-//    }
-//    std::cout << std::endl;
+    std::cout << std::endl;
+    for (auto it : _faces) {
+        std::cout << *(it.second) << std::endl;
+        glm::vec3 n = it.second->normal();
+        std::cout << "n(" << n[0] << ", " << n[1] << ", " << n[2] << ")" << std::endl;
+    }
+    std::cout << std::endl;
+    for (auto it : _vertices) {
+        std::cout << *(it.second) << std::endl;
+    }
+    std::cout << std::endl;
+
     return true;
 }
 
