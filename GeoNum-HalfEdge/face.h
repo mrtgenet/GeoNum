@@ -26,13 +26,13 @@ private: /// Macro
     /**
      * @brief Nombre total de faces construites
      */
-    static unsigned long NBR_OF_FACES;
+    static int NBR_OF_FACES;
 
 private: /// Donnees privees
     /**
      * @brief Identifiant unique compris entre 0 (inclu) et NBR_OF_FACES (exclu)
      */
-    unsigned long _id;
+    int _id;
 
     /**
      * @brief Nombre de sommets de la face
@@ -63,7 +63,7 @@ public: /// Accesseurs
      * @brief Getter pour l'identifiant
      * @return Retourne l'identifiant de la face
      */
-    unsigned long get_id() const;
+    int get_id() const;
 
     /**
      * @brief Taille (nombre de sommets) de la face

@@ -14,7 +14,7 @@ std::ostream& operator<<(std::ostream& os, const Vertex& v) {
 // ------------------------------------------------------------------------------------
 // MACRO
 
-unsigned long Vertex::NBR_OF_VERT = 0;
+int Vertex::NBR_OF_VERT = 0;
 
 
 // ------------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ Vertex::Vertex(float x, float y, float z) :
 // ------------------------------------------------------------------------------------
 // ACCESSEURS
 
-unsigned long Vertex::get_id() const {
+int Vertex::get_id() const {
     return _id;
 }
 

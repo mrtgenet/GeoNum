@@ -44,8 +44,8 @@ int Mesh::_add_vertex(float x, float y, float z) {
     return v->get_id();
 }
 
-int Mesh::_add_face(int n, const int* indices,
-                    std::map<std::pair<int, int>, HalfEdge*>& links)
+int Mesh::_add_face(int n, const int *indices,
+                    std::map<std::pair<int, int>, HalfEdge *> &links)
 {
     if (n < 0) {
         std::cerr << "Invalid number of vertices" << std::endl;
@@ -74,7 +74,8 @@ int Mesh::_add_face(int n, const int* indices,
         // Enregistrement de la demi-arete dans la map links (voir mesh.h)
         auto ret = links.insert(
                     std::pair<std::pair<int, int>, HalfEdge*>(
-                        std::pair<int, int>(source_id, target_id), scan));
+                        std::pair<int, int>(
+                            source_id, target_id), scan));
         if (ret.second == false) {
             std::cerr << "Edge duplicated!" << std::endl;
             return -1;
@@ -86,7 +87,7 @@ int Mesh::_add_face(int n, const int* indices,
     return f->get_id();
 }
 
-void Mesh::_link_halfedges(const std::map<std::pair<int, int>, HalfEdge*>& links) {
+void Mesh::_link_halfedges(const std::map<std::pair<int, int>, HalfEdge *> &links) {
     // Pour chaque face
     for (auto it = _faces.begin(); it != _faces.end(); ++it) {
         // Parcours des demi-aretes a partir de la demi-arete incidente
@@ -98,7 +99,8 @@ void Mesh::_link_halfedges(const std::map<std::pair<int, int>, HalfEdge*>& links
             // Recherche de la demi-arete inverse
             int source_id = scan->source()->get_id();
             int target_id = scan->next()->source()->get_id();
-            auto it = links.find(std::pair<int, int>(target_id, source_id));
+            auto it = links.find(std::pair<int, int>(
+                                     target_id, source_id));
             if (it != links.end()) {
                 // Mise a jour de la tete-beche
                 scan->set_inverse(it->second);
