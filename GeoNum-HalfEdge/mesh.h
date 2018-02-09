@@ -6,10 +6,13 @@
 #include <fstream>
 #include <string>
 #include <map>
+#include <list>
 
 #include "vertex.h"
 #include "face.h"
 
+// Definition temporaire
+class TangentPlane;
 
 /**
  * @brief Representation d'un maillage par un ensemble de faces et un ensemble de
@@ -22,6 +25,11 @@ private: /// Donnees privees
      * @brief Ensemble des sommets indexes par leur identifiant unique
      */
     std::map<int, Vertex*> _vertices;
+
+    /**
+     * @brief Ensemble de plans tangents pour approximer la surface en chaque sommet
+     */
+    std::map<int, TangentPlane*> _tan_planes;
 
     /**
      * @brief Ensemble des faces indexees par leur identifiant unique
@@ -104,7 +112,16 @@ public: /// Misc
      * @param out Vecteur de sommets, modifie par effet de bord
      * @return true si succes, false sinon
      */
-    bool push_vertex_neighbours(int vert_index, std::vector<Vertex*>& out);
+    bool push_vertex_neighbours(int vert_index, std::vector<Vertex*>& out) const;
+
+private: /// Methodes privees pour la generation de mesh a partir d'un nuage de point
+    /**
+     * @brief Cherche les k plus proches voisins d'un sommet v
+     * @param k Nombre de voisins a chercher
+     * @param v Adresse du sommet
+     * @return Liste des k coordonnees des voisins de v
+     */
+    std::list<glm::vec3> k_neighbourhood(int k, Vertex* v);
 };
 
 #endif // MESH_H

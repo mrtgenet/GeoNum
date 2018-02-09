@@ -290,7 +290,7 @@ bool Mesh::export_as(const char* path) const {
 // ------------------------------------------------------------------------------------
 // MISC
 
-bool Mesh::push_vertex_neighbours(int vert_index, std::vector<Vertex*>& out) {
+bool Mesh::push_vertex_neighbours(int vert_index, std::vector<Vertex*>& out) const {
     auto ret = _vertices.find(vert_index);
     if (ret == _vertices.end()) {
         return false;
@@ -298,4 +298,54 @@ bool Mesh::push_vertex_neighbours(int vert_index, std::vector<Vertex*>& out) {
     ret->second->push_neighbours(out);
 
     return true;
+}
+
+
+// ------------------------------------------------------------------------------------
+// METHODES PRIVEES POUR LA GENERATION DE MESH A PARTIR D'UN NUAGE DE POINTS
+
+std::list<glm::vec3> Mesh::k_neighbourhood(int k, Vertex *v) {
+    std::list<glm::vec3> Nbhd;
+    glm::vec3 p = v->coordinates();
+
+    // Relation d'ordre closest(x, y) : plus proche du sommet v de coordonnees p
+    auto closest = [&] (const glm::vec3& x, const glm::vec3& y) -> bool {
+        return (std::fabs(glm::length(x - p)) < std::fabs(glm::length(y - p)));
+    };
+
+    // Initialisation de la liste avec les k premiers sommets
+    int n = k;
+    for (int i = 0; i < n; i++) {
+        // Passer v s'il fait partie des k premiers sommets
+        if (i == v->get_id()) {
+            n++;
+            continue;
+        }
+        auto r = _vertices.find(i);
+        if (r == _vertices.end()) {
+            std::cerr << "Mesh::k_neighbourhood : unexpected error";
+            return std::list<glm::vec3>();
+        }
+        Nbhd.push_back(r->second->coordinates());
+    }
+
+    // Tri en fonction de la relation closest
+    Nbhd.sort(closest);
+
+    // Pour chaque sommet x suivant
+    for (int i = n; i < _vertices.size(); i++) {
+        // Passer v
+        if (i == v->get_id()) continue;
+
+        Vertex* x = _vertices[i];
+        // S'il est plus proche de v que le dernier de la liste
+        if (closest(x->coordinates(), Nbhd.back())) {
+            // Retirer le dernier element, ajouter x, trier
+            Nbhd.pop_back();
+            Nbhd.push_back(x->coordinates());
+            Nbhd.sort(closest);
+        }
+    }
+
+    return Nbhd;
 }
