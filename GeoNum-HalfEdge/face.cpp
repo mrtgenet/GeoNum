@@ -19,7 +19,7 @@ std::ostream& operator<<(std::ostream& os, const Face& f) {
 // ------------------------------------------------------------------------------------
 // MACRO
 
-unsigned long Face::NBR_OF_FACES = 0;
+int Face::NBR_OF_FACES = 0;
 
 
 // ------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ Face::~Face() {
 // ------------------------------------------------------------------------------------
 // CONSTRUCTEURS
 
-unsigned long Face::get_id() const {
+int Face::get_id() const {
     return _id;
 }
 

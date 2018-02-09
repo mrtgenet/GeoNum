@@ -10,6 +10,7 @@
 #include "vertex.h"
 #include "face.h"
 
+
 /**
  * @brief Representation d'un maillage par un ensemble de faces et un ensemble de
  *        sommets mis en relation par des demi-aretes

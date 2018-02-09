@@ -23,13 +23,13 @@ private: /// Macro
     /**
      * @brief Nombre total de sommets construits
      */
-    static unsigned long NBR_OF_VERT;
+    static int NBR_OF_VERT;
 
 private: /// Donnees privees
     /**
      * @brief Identifiant unique compris entre 0 (inclu) et NBR_OF_VERT (exclu)
      */
-    unsigned long _id;
+    int _id;
 
     /**
      * @brief Vecteur des coordonnees 3D du sommet
@@ -55,7 +55,7 @@ public: /// Accesseurs
      * @brief Getter pour l'identifiant
      * @return Retourne l'identifiant du sommet
      */
-    unsigned long get_id() const;
+    int get_id() const;
 
     /**
      * @brief Getter en lecture seule pour les coordonnees
