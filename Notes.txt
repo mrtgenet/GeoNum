@@ -1,0 +1,13 @@
+d(X, Y) : Hausdorff distance
+-> distance entre les deux points les plus proches de X et Y
+
+Nbhd(x_i) = k plus proches voisins de x_i
+-> o_i = centroid(Nbhd(x_i))
+-> n_i : Calcul de la matrice de covariance de Nbhd(x_i)
+	CV = Sum[y dans Nbhd(x_i)](cross((y - o_i), transpose(y - o_i)))
+	-> Eigen values, Eigen vectors
+	
+Map de plans tangents
+-> Classe plan tangent : (o, n)
+
+dist_i(p) = (p - o_i).n_i : distance signée entre p et le plan tangent Tp(x_i)
