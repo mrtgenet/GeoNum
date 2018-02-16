@@ -5,8 +5,12 @@
 #include <sstream>
 #include <fstream>
 #include <string>
+
 #include <map>
 #include <list>
+
+#include <glm/geometric.hpp>
+#include <eigen3/Eigen/Eigenvalues>
 
 #include "vertex.h"
 #include "face.h"
