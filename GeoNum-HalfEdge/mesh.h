@@ -139,6 +139,10 @@ private: /// Methodes privees pour la generation de mesh a partir d'un nuage de 
 
 
 public:
+    /**
+     * @brief Construit les plans tangent pour chaque point
+     * @return -1 en cas d'echec, 0 sinon
+     */
     int __build_planes();
 
 };

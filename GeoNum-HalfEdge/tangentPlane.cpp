@@ -94,18 +94,9 @@ glm::vec3 &TangentPlane::get_normal(){
 // CALCULUS
 
 float TangentPlane::signed_distance(const glm::vec3& x){
-	float dist = std::numeric_limits<float>::infinity();
+    return glm::dot(x - _center, _normal);
+}
 
-	glm::vec3 avg(x[0] - this->get_center()[0],
-								x[1] - this->get_center()[1],
-								x[2] - this-> get_center()[2]);
-
-	dist = glm::dot(avg,this->get_normal());
-
-
-	if(dist == std::numeric_limits<float>::infinity()){
-		fprintf(stderr,"signed distance calculus error at id : %d \n", this->get_id());
-	}
-
-	return dist;
+float TangentPlane::operator^(const TangentPlane& tp) const {
+    return 1.f - std::fabs(glm::dot(_normal, tp.get_normal()));
 }

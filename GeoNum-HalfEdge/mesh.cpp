@@ -358,14 +358,14 @@ std::list<glm::vec3> Mesh::k_neighbourhood(int k, Vertex *v) {
 
 int Mesh::__build_planes() {
     for (auto xi : _vertices) {
-        TangentPlane* tp = new TangentPlane(k_neighbourhood(3, xi.second));
-        std::cout << *tp << std::endl;
+        TangentPlane* tp = new TangentPlane(k_neighbourhoodPCL(3, xi.second));
         auto ret = _tan_planes.insert(
                     std::pair<int, TangentPlane*>(tp->get_id(), tp));
         if (ret.second == false) {
             std::cerr << "Unexpected duplicated tangent plane!" << std::endl;
             return -1;
         }
+        std::cout << *tp << std::endl;
     }
     return 0;
 }

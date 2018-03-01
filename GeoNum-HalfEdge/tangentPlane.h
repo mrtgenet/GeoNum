@@ -103,6 +103,12 @@ public: // Calculus
     */
     float signed_distance(const glm::vec3& x);
 
+    /**
+     * @brief Operateur ^ : mesure a quel point de plans tangent sont paralleles
+     * @param tp Second plan tangent
+     * @return Valeur proche de 0 si les plans sont presque paralleles
+     */
+    float operator^(const TangentPlane& tp) const;
 };
 
 #endif
