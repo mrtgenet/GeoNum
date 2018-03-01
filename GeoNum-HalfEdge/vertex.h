@@ -58,6 +58,24 @@ public: /// Accesseurs
     int get_id() const;
 
     /**
+      * @brief Getter en lecture seule pour la coordonnée x
+      * @return Retourne la coordonnée x
+      */
+    const float getX() const;
+
+    /**
+      * @brief Getter en lecture seule pour la coordonnée y
+      * @return Retourne la coordonnée y
+      */
+
+    const float getY() const;
+    /**
+      * @brief Getter en lecture seule pour la coordonnée z
+      * @return Retourne la coordonnée z
+      */
+    const float getZ() const;
+
+    /**
      * @brief Getter en lecture seule pour les coordonnees
      * @return Retourne une reference des coordonnees en lecture seule
      */

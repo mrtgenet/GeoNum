@@ -35,6 +35,18 @@ int Vertex::get_id() const {
     return _id;
 }
 
+const float Vertex::getX() const{
+    return _coord.x;
+}
+
+const float Vertex::getY() const{
+    return _coord.y;
+}
+
+const float Vertex::getZ() const{
+    return _coord.z;
+}
+
 const glm::vec3 &Vertex::coordinates() const {
     return _coord;
 }

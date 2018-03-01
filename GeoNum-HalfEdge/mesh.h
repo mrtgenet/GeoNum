@@ -12,6 +12,10 @@
 #include <glm/geometric.hpp>
 #include <eigen3/Eigen/Eigenvalues>
 
+#include <pcl/point_cloud.h>
+#include <pcl/kdtree/impl/kdtree_flann.hpp>
+#include <vector>
+
 #include "vertex.h"
 #include "face.h"
 #include "tangentPlane.h"
@@ -127,6 +131,8 @@ private: /// Methodes privees pour la generation de mesh a partir d'un nuage de 
 
 public:
     int __build_planes();
+
+    std::list<glm::vec3> k_neighbourhoodPCL(int k, Vertex* v);
 };
 
 #endif // MESH_H

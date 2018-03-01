@@ -369,3 +369,44 @@ int Mesh::__build_planes() {
     }
     return 0;
 }
+
+std::vector<int> Mesh::k_neighbourhoodIds(int k, Vertex *v) {
+
+        //les ids des k plus proches voisins
+        std::vector<int> pointIdxNKNSearch(k);
+        //la distance aux voisins
+        std::vector<float> pointNKNSquaredDistance(k);
+
+        //on crée un nuage de point
+        pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>);
+        cloud->width=_vertices.size();
+        cloud->height=1;
+        cloud->points.resize(cloud->width * cloud->height);
+
+        //on met les vertex dans le cloud
+
+       for(auto it : _vertices){
+            cloud->push_back(pcl::PointXYZ(it.second->getX(), it.second->getY(), it.second->getZ()));
+        }
+
+
+
+        pcl::KdTreeFLANN<pcl::PointXYZ> kdtree;
+        kdtree.setInputCloud(cloud);
+
+        pcl::PointXYZ searchPoint(v->getX(), v->getY(), v->getZ());
+
+        kdtree.nearestKSearch(searchPoint,k,pointIdxNKNSearch, pointNKNSquaredDistance);
+
+
+        std::list<glm::vec3> ret;
+
+        for(int i = 0; i < k; i++){
+            ret.push_back(_vertices[pointIdxNKNSearch[i]]->coordinates());
+
+        }
+
+
+        return ret;
+
+}
