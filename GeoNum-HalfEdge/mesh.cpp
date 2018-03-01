@@ -370,7 +370,7 @@ int Mesh::__build_planes() {
     return 0;
 }
 
-std::vector<int> Mesh::k_neighbourhoodIds(int k, Vertex *v) {
+std::list<glm::vec3> Mesh::k_neighbourhoodPCL(int k, Vertex *v) {
 
         //les ids des k plus proches voisins
         std::vector<int> pointIdxNKNSearch(k);

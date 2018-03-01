@@ -129,10 +129,18 @@ private: /// Methodes privees pour la generation de mesh a partir d'un nuage de 
      */
     std::list<glm::vec3> k_neighbourhood(int k, Vertex* v);
 
+    /**
+     * @brief Cherche les k plus proches voisins d'un sommet v en utilisant PCL (O(nlog(n))
+     * @param k Nombre de voisins a chercher
+     * @param v Adresse du sommet
+     * @return Liste des k coordonnees des voisins de v
+     */
+    std::list<glm::vec3> k_neighbourhoodPCL(int k, Vertex* v);
+
+
 public:
     int __build_planes();
 
-    std::list<glm::vec3> k_neighbourhoodPCL(int k, Vertex* v);
 };
 
 #endif // MESH_H
