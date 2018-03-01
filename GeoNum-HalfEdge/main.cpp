@@ -10,6 +10,7 @@
 
 #include <iostream>
 
+#include "tangentPlane.h"
 #include "mesh.h"
 
 using namespace std;
@@ -40,6 +41,8 @@ int main()
         std::cout << (*it) << std::endl;
     }
     std::cout << std::endl;
+
+    mesh.__build_planes();
 
     return 0;
 }

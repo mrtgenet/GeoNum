@@ -14,9 +14,7 @@
 
 #include "vertex.h"
 #include "face.h"
-
-// Definition temporaire
-class TangentPlane;
+#include "tangentPlane.h"
 
 /**
  * @brief Representation d'un maillage par un ensemble de faces et un ensemble de
@@ -126,6 +124,9 @@ private: /// Methodes privees pour la generation de mesh a partir d'un nuage de 
      * @return Liste des k coordonnees des voisins de v
      */
     std::list<glm::vec3> k_neighbourhood(int k, Vertex* v);
+
+public:
+    int __build_planes();
 };
 
 #endif // MESH_H

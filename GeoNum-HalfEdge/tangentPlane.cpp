@@ -22,6 +22,7 @@ int TangentPlane::NBR_OF_TANGENTPLANES = 0;
 TangentPlane::TangentPlane(const std::list<glm::vec3>& vertices) :
     _id(TangentPlane::NBR_OF_TANGENTPLANES)
 {
+    TangentPlane::NBR_OF_TANGENTPLANES += 1;
     _center = __centroid(vertices);
     _normal = __normal(vertices, _center);
 }
@@ -52,9 +53,14 @@ glm::vec3 TangentPlane::__normal(const std::list<glm::vec3>& vertices,
             CV[0][1], CV[1][1], CV[2][1],
             CV[0][2], CV[1][2], CV[2][2];
 
-    Eigen::EigenSolver<Eigen::Matrix3f> eigen(ECV);
+    Eigen::EigenSolver<Eigen::Matrix3f> sol(ECV);
+    // Note : Comme la matrice de covariance est necessairement symétrique,
+    // les valeurs/vecteurs propres n'ont pas de partie imaginaire
 
-    return glm::vec3(/* eigen vector 3 */);
+    return glm::vec3(
+            sol.eigenvectors().col(1)[0].real(),
+            sol.eigenvectors().col(1)[1].real(),
+            sol.eigenvectors().col(1)[2].real());
 }
 
 // ------------------------------------------------------------------------------------

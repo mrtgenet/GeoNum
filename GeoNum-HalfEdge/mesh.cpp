@@ -27,6 +27,12 @@ Mesh::~Mesh() {
             delete it->second;
         }
     }
+    // Liberation de la memoire pour les plans tangent
+    for (auto it = _tan_planes.begin(); it != _tan_planes.end(); ++it) {
+        if (it->second != nullptr) {
+            delete it->second;
+        }
+    }
 }
 
 
@@ -348,4 +354,18 @@ std::list<glm::vec3> Mesh::k_neighbourhood(int k, Vertex *v) {
     }
 
     return Nbhd;
+}
+
+int Mesh::__build_planes() {
+    for (auto xi : _vertices) {
+        TangentPlane* tp = new TangentPlane(k_neighbourhood(3, xi.second));
+        std::cout << *tp << std::endl;
+        auto ret = _tan_planes.insert(
+                    std::pair<int, TangentPlane*>(tp->get_id(), tp));
+        if (ret.second == false) {
+            std::cerr << "Unexpected duplicated tangent plane!" << std::endl;
+            return -1;
+        }
+    }
+    return 0;
 }
