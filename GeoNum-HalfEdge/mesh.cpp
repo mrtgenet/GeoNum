@@ -406,20 +406,26 @@ std::list<int> Mesh::tan_plane_k_neighbourhood(int k, TangentPlane* tp) {
 std::list<glm::vec3> Mesh::k_neighbourhoodPCL(int k, Vertex *v) {
 
         //les ids des k plus proches voisins
-        std::vector<int> pointIdxNKNSearch(k);
+        std::vector<int> pointIdxNKNSearch(k+1);
         //la distance aux voisins
-        std::vector<float> pointNKNSquaredDistance(k);
+        std::vector<float> pointNKNSquaredDistance(k+1);
 
         //on crée un nuage de point
         pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>);
-        cloud->width=_vertices.size();
+        cloud->width = _vertices.size();
         cloud->height=1;
-        cloud->points.resize(cloud->width * cloud->height);
+        cloud->points.resize (cloud->width * cloud->height);
 
         //on met les vertex dans le cloud
 
+       int i = 0;
+
        for(auto it : _vertices){
-            cloud->push_back(pcl::PointXYZ(it.second->getX(), it.second->getY(), it.second->getZ()));
+            cloud->points[i].x = it.second->getX();
+            cloud->points[i].y = it.second->getY();
+            cloud->points[i].z = it.second->getZ();
+
+            i++;
         }
 
 
@@ -427,15 +433,21 @@ std::list<glm::vec3> Mesh::k_neighbourhoodPCL(int k, Vertex *v) {
         pcl::KdTreeFLANN<pcl::PointXYZ> kdtree;
         kdtree.setInputCloud(cloud);
 
-        pcl::PointXYZ searchPoint(v->getX(), v->getY(), v->getZ());
+        pcl::PointXYZ searchPoint; searchPoint.x = v->getX(); searchPoint.y = v->getY(); searchPoint.z = v->getZ();
 
-        kdtree.nearestKSearch(searchPoint,k,pointIdxNKNSearch, pointNKNSquaredDistance);
+        kdtree.nearestKSearch (searchPoint, k+1, pointIdxNKNSearch, pointNKNSquaredDistance);
+
+
+
 
 
         std::list<glm::vec3> ret;
 
-        for(int i = 0; i < k; i++){
-            ret.push_back(_vertices[pointIdxNKNSearch[i]]->coordinates());
+        for(int i = 1; i < k+1; i++){
+            ret.push_back(glm::vec3(cloud->points[pointIdxNKNSearch[i]].x,
+                          cloud->points[pointIdxNKNSearch[i]].y,
+                    cloud->points[pointIdxNKNSearch[i]].z));
+
 
         }
 
