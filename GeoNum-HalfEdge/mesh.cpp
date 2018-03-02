@@ -379,11 +379,9 @@ std::list<glm::vec3> Mesh::k_neighbourhoodPCL(int k, Vertex *v) {
 
         //on crée un nuage de point
         pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>);
-        cloud->width=_vertices.size();
-        cloud->height=1;
-        cloud->points.resize(cloud->width * cloud->height);
 
         //on met les vertex dans le cloud
+
 
        for(auto it : _vertices){
             cloud->push_back(pcl::PointXYZ(it.second->getX(), it.second->getY(), it.second->getZ()));
@@ -398,11 +396,22 @@ std::list<glm::vec3> Mesh::k_neighbourhoodPCL(int k, Vertex *v) {
 
         kdtree.nearestKSearch(searchPoint,k,pointIdxNKNSearch, pointNKNSquaredDistance);
 
+       for(size_t i = 0; i < pointIdxNKNSearch.size(); ++i){
+            std::cout << "    " << cloud->points[pointIdxNKNSearch[i]].x
+                      << " " << cloud->points[ pointIdxNKNSearch[i] ].y
+                      << " " << cloud->points[ pointIdxNKNSearch[i]].z << std::endl;
+       }
+
+
+
 
         std::list<glm::vec3> ret;
 
         for(int i = 0; i < k; i++){
-            ret.push_back(_vertices[pointIdxNKNSearch[i]]->coordinates());
+            ret.push_back(glm::vec3(cloud->points[pointIdxNKNSearch[i]].x,
+                          cloud->points[pointIdxNKNSearch[i]].y,
+                    cloud->points[pointIdxNKNSearch[i]].z));
+
 
         }
 

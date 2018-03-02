@@ -76,6 +76,24 @@ public: /// Accesseurs
     const float getZ() const;
 
     /**
+      * @brief Getter pour la coordonnée x
+      * @return Retourne la coordonnée x
+      */
+    float getX();
+
+    /**
+      * @brief Getter pour la coordonnée y
+      * @return Retourne la coordonnée y
+      */
+
+    float getY();
+    /**
+      * @brief Getter pour la coordonnée z
+      * @return Retourne la coordonnée z
+      */
+    float getZ();
+
+    /**
      * @brief Getter en lecture seule pour les coordonnees
      * @return Retourne une reference des coordonnees en lecture seule
      */

@@ -47,6 +47,18 @@ const float Vertex::getZ() const{
     return _coord.z;
 }
 
+float Vertex::getX(){
+    return _coord.x;
+}
+
+float Vertex::getY(){
+    return _coord.y;
+}
+
+float Vertex::getZ(){
+    return _coord.z;
+}
+
 const glm::vec3 &Vertex::coordinates() const {
     return _coord;
 }
