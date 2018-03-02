@@ -11,3 +11,9 @@ Map de plans tangents
 -> Classe plan tangent : (o, n)
 
 dist_i(p) = (p - o_i).n_i : distance signée entre p et le plan tangent Tp(x_i)
+
+
+
+pour error libvtkproj4 :
+
+ln -s /usr/lib/x86_64-linux-gnu/libvtkCommonCore-6.2.so /usr/lib/libvtkproj4.so
