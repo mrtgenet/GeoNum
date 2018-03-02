@@ -456,6 +456,47 @@ std::list<glm::vec3> Mesh::k_neighbourhoodPCL(int k, Vertex *v) {
 
 }
 
+
+std::vector<int> Mesh::tan_plane_k_neighbourhoodPCL(int k, TangentPlane* tp){
+    //les ids des k plus proches voisins
+    std::vector<int> pointIdxNKNSearch(k+1);
+    //la distance aux voisins
+    std::vector<float> pointNKNSquaredDistance(k+1);
+
+    //on crée un nuage de point
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>);
+    cloud->width = _tan_planes.size();
+    cloud->height=1;
+    cloud->points.resize (cloud->width * cloud->height);
+
+    //on met les centres des plans tangents dans le cloud
+
+   int i = 0;
+
+   for(auto it : _tan_planes){
+        cloud->points[i].x = it.second->get_center()[0];
+        cloud->points[i].y = it.second->get_center()[1];
+        cloud->points[i].z = it.second->get_center()[2];
+
+        i++;
+    }
+
+
+
+    pcl::KdTreeFLANN<pcl::PointXYZ> kdtree;
+    kdtree.setInputCloud(cloud);
+
+    pcl::PointXYZ searchPoint; searchPoint.x = tp->get_center()[0]; searchPoint.y = tp->get_center()[1]; searchPoint.z = tp->get_center()[2];
+
+    kdtree.nearestKSearch (searchPoint, k+1, pointIdxNKNSearch, pointNKNSquaredDistance);
+
+
+
+
+    return pointIdxNKNSearch;
+
+}
+
 int Mesh::__build_planes() {
     for (auto xi : _vertices) {
         TangentPlane* tp = new TangentPlane(k_neighbourhoodPCL(3, xi.second));

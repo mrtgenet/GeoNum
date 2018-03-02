@@ -148,6 +148,14 @@ private: /// Methodes privees pour la generation de mesh a partir d'un nuage de 
      */
     std::list<glm::vec3> k_neighbourhoodPCL(int k, Vertex* v);
 
+    /**
+     * @brief Cherche les k plus proches voisins d'un d'un plan tangent tp en utilisant PCL (O(nlog(n))
+     * @param k Nombre de voisins a chercher
+     * @param tp Adresse du plan tangent
+     * @return Liste des k coordonnees des voisins de tp
+     */
+    std::vector<int> tan_plane_k_neighbourhoodPCL(int k, TangentPlane* tp);
+
 
 public:
     /**
