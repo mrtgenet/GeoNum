@@ -356,18 +356,51 @@ std::list<glm::vec3> Mesh::k_neighbourhood(int k, Vertex *v) {
     return Nbhd;
 }
 
-int Mesh::__build_planes() {
-    for (auto xi : _vertices) {
-        TangentPlane* tp = new TangentPlane(k_neighbourhoodPCL(3, xi.second));
-        auto ret = _tan_planes.insert(
-                    std::pair<int, TangentPlane*>(tp->get_id(), tp));
-        if (ret.second == false) {
-            std::cerr << "Unexpected duplicated tangent plane!" << std::endl;
-            return -1;
+std::list<int> Mesh::tan_plane_k_neighbourhood(int k, TangentPlane* tp) {
+    std::list<int> Nbhd;
+    glm::vec3 o = tp->get_center();
+
+    // Relation d'ordre closest(i, j) : plus proche du centre du plan tp
+    auto closest = [&] (int i, int j) -> bool {
+        return (std::fabs(glm::length(_tan_planes[i]->get_center() - o))
+                < std::fabs(glm::length(_tan_planes[j]->get_center() - o)));
+    };
+
+    // Initialisation de la liste avec les k premiers plans
+    int n = k;
+    for (int i = 0; i < n; i++) {
+        // Passer tp s'il fait partie des k premiers plans
+        if (i == tp->get_id()) {
+            n++;
+            continue;
         }
-        std::cout << *tp << std::endl;
+        auto r = _tan_planes.find(i);
+        if (r == _tan_planes.end()) {
+            std::cerr << "Mesh::tan_plane_k_neighbourhood : unexpected error";
+            return std::list<int>();
+        }
+        Nbhd.push_back(r->second->get_id());
     }
-    return 0;
+
+    // Tri en fonction de la relation closest
+    Nbhd.sort(closest);
+
+    // Pour chaque plan x suivant
+    for (int i = n; i < _tan_planes.size(); i++) {
+        // Passer tp
+        if (i == tp->get_id()) continue;
+
+        int tx = _tan_planes[i]->get_id();
+        // S'il est plus proche de tp que le dernier de la liste
+        if (closest(tx, Nbhd.back())) {
+            // Retirer le dernier element, ajouter x, trier
+            Nbhd.pop_back();
+            Nbhd.push_back(tx);
+            Nbhd.sort(closest);
+        }
+    }
+
+    return Nbhd;
 }
 
 std::list<glm::vec3> Mesh::k_neighbourhoodPCL(int k, Vertex *v) {
@@ -409,4 +442,25 @@ std::list<glm::vec3> Mesh::k_neighbourhoodPCL(int k, Vertex *v) {
 
         return ret;
 
+}
+
+int Mesh::__build_planes() {
+    for (auto xi : _vertices) {
+        TangentPlane* tp = new TangentPlane(k_neighbourhood(3, xi.second));
+        auto ret = _tan_planes.insert(
+                    std::pair<int, TangentPlane*>(tp->get_id(), tp));
+        if (ret.second == false) {
+            std::cerr << "Unexpected duplicated tangent plane!" << std::endl;
+            return -1;
+        }
+        std::cout << *tp << std::endl;
+    }
+    return 0;
+}
+
+int Mesh::__orient_planes_normals() {
+    Graph g(_tan_planes.size());
+    // TODO : calcul du k_voisinnage pour les plans tangent -> liste de E
+
+    return 0;
 }

@@ -11,6 +11,8 @@
 
 #include <glm/geometric.hpp>
 #include <eigen3/Eigen/Eigenvalues>
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/kruskal_min_spanning_tree.hpp>
 
 #include <pcl/point_cloud.h>
 #include <pcl/kdtree/impl/kdtree_flann.hpp>
@@ -19,6 +21,13 @@
 #include "vertex.h"
 #include "face.h"
 #include "tangentPlane.h"
+
+// Definitions pour le Minimum Spanning Tree
+typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS,
+            boost::no_property, boost::property<boost::edge_weight_t, float>> Graph;
+typedef boost::graph_traits<Graph>::edge_descriptor GEdge;
+typedef boost::graph_traits<Graph>::vertex_descriptor GVertex;
+typedef std::pair<int, int> GE;
 
 /**
  * @brief Representation d'un maillage par un ensemble de faces et un ensemble de
@@ -129,6 +138,8 @@ private: /// Methodes privees pour la generation de mesh a partir d'un nuage de 
      */
     std::list<glm::vec3> k_neighbourhood(int k, Vertex* v);
 
+    std::list<int> tan_plane_k_neighbourhood(int k, TangentPlane* tp);
+
     /**
      * @brief Cherche les k plus proches voisins d'un sommet v en utilisant PCL (O(nlog(n))
      * @param k Nombre de voisins a chercher
@@ -144,6 +155,8 @@ public:
      * @return -1 en cas d'echec, 0 sinon
      */
     int __build_planes();
+
+    int __orient_planes_normals();
 
 };
 

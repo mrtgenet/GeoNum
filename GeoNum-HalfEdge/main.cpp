@@ -42,6 +42,8 @@ int main()
     }
     std::cout << std::endl;
 
+    mesh.__build_planes();
+
     return 0;
 }
 
