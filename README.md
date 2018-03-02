@@ -45,5 +45,7 @@ glm::vec3 _normal;
 Chaque point aura un plan tangent *t*. Pour calculer ce plan, il faut trouver les k plus proches voisins de *t*. Pour cela, on utilise un *KdTree*, qui est une structure de donné qui permet d'orgniser des points dans un espace à *k* dimensions. On utilise la librairie PointCloud, qui nous permet de le faire avec une complexité en ```O(nlog(n))``` : http://pointclouds.org/documentation/tutorials/kdtree_search.php
 
 
-
 ### Résultats
+
+
+### Discussions
