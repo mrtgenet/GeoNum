@@ -26,24 +26,27 @@ Compiler le programme
 $ make
 ```
 
+ou bien utiliser QtCreator avec le CMakeLists.txt
 
 ### Implémentation
+
 Pour représenter un point, on utilisera OpenGL Mathematics et notamment ```glm::vec3```
 
-Un maillage est représenté par un ensemble de faces et un ensemble de sommets mis en relation par des demi-arêtes.
-On a donc un objet **face**, un objet **halfedge** et un objet **vertex**. Ensuite, l'objet  **tangentPlane** nous servira à approximer la surface en chaque sommet. Le **mesh** sera constitué de ces objets avec en utilisant ``` std::map ```
+Un maillage est représenté par un ensemble de faces et un ensemble de sommets mis en relation par des demi-arêtes, structures pour lesquelles on a respectivement les classes **Face**, **Vertex** et **HalfEdge**. La classe **Mesh** consiste donc essentiellement en deux ``` std::map ``` pour stocker les faces et les sommets (on génère les demi-arêtes correspondantes à la volée). Cette structure permet de charger et de sauvegarder des maillages au format OFF.
+
+Pour la reconstruction de maillage à partir d'un nuage de points, la classe  **TangentPlane** nous servira à approximer la surface en chaque sommet. Le **Mesh** comportera donc les objets suivant : 
 ```cpp
 std::map<int, Vertex*> _vertices;
 std::map<int, TangentPlane*> _tan_planes;
 std:map<int, Face*> _faces;
 ``` 
-Les **plans tangents** sont représentés par un point qui est son centre et un vecteur normal.
+Les **plans tangents** sont sont construits dans la classe **Mesh** en calculant les k plus proches voisins de chaque point. Pour cela, on utilise un *KdTree*, qui est une structure de donnée qui permet d'orgniser des points dans un espace à *k* dimensions. On utilise la librairie PointCloud, qui nous permet de le faire avec une complexité en ```O(nlog(n))``` : http://pointclouds.org/documentation/tutorials/kdtree_search.php. A partir du voisinage d'un point *t*, on peut donc représenter le plan tangent *Tp(t)* par le barycentre des k voisins de *t* et le vecteur normal au plan obtenu en calculant les vecteurs propres de la matrice de covariance des k voisins, ce qui est fait via un ```EigenSolver``` de la librairie Eigen. Un objet **TangentPlane** consiste donc essentiellement deux attributs :
 ```cpp
 glm::vec3 _center;
 glm::vec3 _normal;
 ``` 
-Chaque point aura un plan tangent *t*. Pour calculer ce plan, il faut trouver les k plus proches voisins de *t*. Pour cela, on utilise un *KdTree*, qui est une structure de donné qui permet d'orgniser des points dans un espace à *k* dimensions. On utilise la librairie PointCloud, qui nous permet de le faire avec une complexité en ```O(nlog(n))``` : http://pointclouds.org/documentation/tutorials/kdtree_search.php
 
+Ces données permettent facilement d'implémenter la distance signée utilisée dans le papier de recherche, ainsi que le calcul de l'indice exprimant à quel point deux plans sont parallèles, pour orienter les normales de manière consistante.
 
 ### Résultats
 
