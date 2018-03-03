@@ -3,10 +3,16 @@ Genet Martin
  M1 ISI 2017-2018
  
 # Géométrie Numérique
+
 ## Rapport de projet
+
 Reconstruction de surface à partir de points non organisés
 Basé sur l'article de Hugues Hoppe, Tony DeRose, Tom Duchamp, John McDonald et Werner Stuetzle
+
+**Etat actuel :** Implémentation jusqu'a l'orientation des normales aux plans tangents.
+
 ### Utilisation
+
 Il est possible d'avoir à installer quelques librairies que nous avons utilisés :
 PointCloud, libproj4, eigen, boost, OpenGL Mathematics
 ```sh
@@ -50,5 +56,24 @@ Ces données permettent facilement d'implémenter la distance signée utilisée 
 
 ### Résultats
 
+Test mémoire (valgrind) :
+```
+==3377== 
+==3377== HEAP SUMMARY:
+==3377==     in use at exit: 72,712 bytes in 2 blocks
+==3377==   total heap usage: 516 allocs, 514 frees, 215,526 bytes allocated
+==3377== 
+==3377== LEAK SUMMARY:
+==3377==    definitely lost: 0 bytes in 0 blocks
+==3377==    indirectly lost: 0 bytes in 0 blocks
+==3377==      possibly lost: 0 bytes in 0 blocks
+==3377==    still reachable: 72,712 bytes in 2 blocks
+==3377==         suppressed: 0 bytes in 0 blocks
+==3377== Rerun with --leak-check=full to see details of leaked memory
+==3377== 
+==3377== For counts of detected and suppressed errors, rerun with: -v
+==3377== Use --track-origins=yes to see where uninitialised values come from
+==3377== ERROR SUMMARY: 121 errors from 9 contexts (suppressed: 0 from 0)
+```
 
 ### Discussions
