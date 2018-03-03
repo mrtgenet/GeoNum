@@ -38,7 +38,7 @@ Pour la reconstruction de maillage à partir d'un nuage de points, la classe  **
 ```cpp
 std::map<int, Vertex*> _vertices;
 std::map<int, TangentPlane*> _tan_planes;
-std:map<int, Face*> _faces;
+std::map<int, Face*> _faces;
 ``` 
 Les **plans tangents** sont sont construits dans la classe **Mesh** en calculant les k plus proches voisins de chaque point. Pour cela, on utilise un *KdTree*, qui est une structure de donnée qui permet d'orgniser des points dans un espace à *k* dimensions. On utilise la librairie PointCloud, qui nous permet de le faire avec une complexité en ```O(nlog(n))``` : http://pointclouds.org/documentation/tutorials/kdtree_search.php. A partir du voisinage d'un point *t*, on peut donc représenter le plan tangent *Tp(t)* par le barycentre des k voisins de *t* et le vecteur normal au plan obtenu en calculant les vecteurs propres de la matrice de covariance des k voisins, ce qui est fait via un ```EigenSolver``` de la librairie Eigen. Un objet **TangentPlane** consiste donc essentiellement deux attributs :
 ```cpp
