@@ -76,6 +76,94 @@ Test mémoire (valgrind) :
 ==3377== ERROR SUMMARY: 121 errors from 9 contexts (suppressed: 0 from 0)
 ```
 
+Résultat de l'exécution (importation de cube.off, calcul des k-voisins, création des plans tangents)
+```
+Import :
+OFF file successfully imported.
+
+Face 0:
+0 1 2 3 
+n(0, 1, 0)
+c(0.5, 1, 0.5)
+Face 1:
+7 4 0 3 
+n(0, 0, 1)
+c(0.5, 0.5, 1)
+Face 2:
+4 5 1 0 
+n(1, 0, 0)
+c(1, 0.5, 0.5)
+Face 3:
+5 6 2 1 
+n(0, 0, -1)
+c(0.5, 0.5, 0)
+Face 4:
+3 2 6 7 
+n(-1, 0, 0)
+c(0, 0.5, 0.5)
+Face 5:
+6 5 4 7 
+n(0, -1, 0)
+c(0.5, 0, 0.5)
+
+Vertex 0:
+1 1 1
+Vertex 1:
+1 1 0
+Vertex 2:
+0 1 0
+Vertex 3:
+0 1 1
+Vertex 4:
+1 0 1
+Vertex 5:
+1 0 0
+Vertex 6:
+0 0 0
+Vertex 7:
+0 0 1
+
+Vertex 4 neighbours :
+Vertex 7:
+0 0 1
+Vertex 0:
+1 1 1
+Vertex 5:
+1 0 0
+
+Tangent Plane 0 : 
+Centre : 0.666667 0.666667 0.666667
+Normale : -0.57735 -0.57735 -0.57735
+
+Tangent Plane 1 : 
+Centre : 0.666667 0.666667 0.333333
+Normale : -0.57735 -0.57735 0.57735
+
+Tangent Plane 2 : 
+Centre : 0.333333 0.666667 0.333333
+Normale : 0.57735 -0.57735 0.57735
+
+Tangent Plane 3 : 
+Centre : 0.333333 0.666667 0.666667
+Normale : 0.57735 -0.57735 -0.57735
+
+Tangent Plane 4 : 
+Centre : 0.666667 0.333333 0.666667
+Normale : 0.57735 -0.57735 0.57735
+
+Tangent Plane 5 : 
+Centre : 0.666667 0.333333 0.333333
+Normale : 0.57735 -0.57735 -0.57735
+
+Tangent Plane 6 : 
+Centre : 0.333333 0.333333 0.333333
+Normale : -0.57735 -0.57735 -0.57735
+
+Tangent Plane 7 : 
+Centre : 0.333333 0.333333 0.666667
+Normale : -0.57735 -0.57735 0.57735
+```
+
 ### Discussions
 
 L’avantage de cette méthode consiste dans le fait qu’aucune information supplémentaire sur la structure de la surface à reconstituer n’est nécessaire : on peut reconstruire un maillage à partir du nuage de points brut. On peut donc utiliser cette approche là où d’autres sont impraticables.
