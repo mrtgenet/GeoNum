@@ -27,8 +27,9 @@ Il se peut également qu'il faille ensuite créer un lien :
 $ sudo ln -s /usr/lib/x86_64-linux-gnu/libvtkCommonCore-6.2.so /usr/lib/libvtkproj4.so
 ```
 
-Compiler le programme
+Pour générer le Makefile puis compiler le programme :
 ```sh
+$ cmake -G "Unix Makefiles"
 $ make
 ```
 
