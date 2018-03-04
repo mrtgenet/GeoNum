@@ -164,6 +164,13 @@ Centre : 0.333333 0.333333 0.666667
 Normale : -0.57735 -0.57735 0.57735
 ```
 
+Calcul du temps d'exécution pour un fichier de 2132 points :
+```
+OFF file successfully imported.
+Mesh import execution time : 0.041439 s
+Tangent planes construction execution time : 2.90667 s
+```
+
 ### Discussions
 
 L’avantage de cette méthode consiste dans le fait qu’aucune information supplémentaire sur la structure de la surface à reconstituer n’est nécessaire : on peut reconstruire un maillage à partir du nuage de points brut. On peut donc utiliser cette approche là où d’autres sont impraticables.
