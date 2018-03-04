@@ -77,3 +77,11 @@ Test mémoire (valgrind) :
 ```
 
 ### Discussions
+
+L’avantage de cette méthode consiste dans le fait qu’aucune information supplémentaire sur la structure de la surface à reconstituer n’est nécessaire : on peut reconstruire un maillage à partir du nuage de points brut. On peut donc utiliser cette approche là où d’autres sont impraticables.
+
+Mais on voit sur les exemples qui mettent en oeuvre cette méthode qu’elle présente des problèmes à certains endroits clés (par exemple les oreilles du chat). On peut expliquer cela par le fait que s’il n’y a pas suffisamment de points aux arêtes vives, l’approximation des plans tangents ne permettra pas la représentation effective de la forme à reconstituer. Pour palier à ce problème, on pourrait augmenter l’échantillonnage, mais alors une quantité excessive de points serait alors inutiles car se trouvant dans des zones relativement lisses. 
+
+On peut donc imaginer une pré-étape qui permettrait de repérer ces arêtes vives et donc de corriger ce problème, par exemple en les subdivisant pour ajouter des points, mais ce serait une tâche très complexe n’ayant comme unique information qu’un nuage de point.
+
+L’inconvénient majeur de cette technique réside donc dans le fait que l’on a justement pas d’information spécifiquement pour les arêtes vives avec le nuage de point brut. 
