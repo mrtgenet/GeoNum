@@ -2,16 +2,16 @@ Lambrecht Louis
 Genet Martin
  M1 ISI 2017-2018
  
-# Géométrie Numérique
+## Géométrie Numérique
 
-## Rapport de projet
+### Rapport de projet
 
 Reconstruction de surface à partir de points non organisés
 Basé sur l'article de Hugues Hoppe, Tony DeRose, Tom Duchamp, John McDonald et Werner Stuetzle
 
 **Etat actuel :** Implémentation jusqu'a l'orientation des normales aux plans tangents.
 
-### Utilisation
+#### Utilisation
 
 Il est possible d'avoir à installer quelques librairies que nous avons utilisés :
 PointCloud, libproj4, eigen, boost, OpenGL Mathematics
@@ -35,7 +35,7 @@ $ make
 
 ou bien utiliser QtCreator avec le CMakeLists.txt
 
-### Implémentation
+#### Implémentation
 
 Pour représenter un point, on utilisera OpenGL Mathematics et notamment ```glm::vec3```
 
@@ -55,7 +55,7 @@ glm::vec3 _normal;
 
 Ces données permettent facilement d'implémenter la distance signée utilisée dans le papier de recherche, ainsi que le calcul de l'indice exprimant à quel point deux plans sont parallèles, pour orienter les normales de manière consistante.
 
-### Résultats
+#### Résultats
 
 Test mémoire (valgrind) :
 ```
@@ -172,7 +172,7 @@ Mesh import execution time : 0.041439 s
 Tangent planes construction execution time : 2.90667 s
 ```
 
-### Discussions
+#### Discussions
 
 L’avantage de cette méthode consiste dans le fait qu’aucune information supplémentaire sur la structure de la surface à reconstituer n’est nécessaire : on peut reconstruire un maillage à partir du nuage de points brut. On peut donc utiliser cette approche là où d’autres sont impraticables.
 
